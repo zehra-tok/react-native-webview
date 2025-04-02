@@ -389,6 +389,34 @@ export interface WindowsWebViewProps extends WebViewSharedProps {
   onSourceChanged?: (event: WebViewNavigationEvent) => void;
 }
 
+export interface WindowsWebViewProps extends WebViewSharedProps {
+  /**
+   * Boolean value that detenmines whether the web view should use the new chromium based edge webview.
+   */
+  useWebView2?: boolean;
+  /**
+   * Function that is invoked when the `WebView` should open a new window.
+   *
+   * This happens when the JS calls `window.open('http://someurl', '_blank')`
+   * or when the user clicks on a `<a href="http://someurl" target="_blank">` link.
+   *
+   * Only works with `useWebView2` set to `true`.
+   *
+   * @platform windows
+   */
+  onOpenWindow?: (event: WebViewOpenWindowEvent) => void;
+
+  /**
+   * Function that is invoked when the `WebView` responds to a request to load a new resource.
+   * Works only on Windows.
+   *
+   * Only works with `useWebView2` set to `true`.
+   *
+   * @platform windows
+   */
+  onSourceChanged?: (event: WebViewNavigationEvent) => void;
+}
+
 export interface IOSWebViewProps extends WebViewSharedProps {
   /**
    * Does not store any data within the lifetime of the WebView.
@@ -506,13 +534,6 @@ export interface IOSWebViewProps extends WebViewSharedProps {
    * @platform ios
    */
   allowsInlineMediaPlayback?: boolean;
-  /**
-   * Boolean value that indicates whether HTML5 videos can play Picture in Picture.
-   * The default value is `true`.
-   *
-   * @platform macos
-   */
-  allowsPictureInPictureMediaPlayback?: boolean;
   /**
    * A Boolean value indicating whether AirPlay is allowed. The default value is `false`.
    * @platform ios
@@ -658,15 +679,6 @@ export interface IOSWebViewProps extends WebViewSharedProps {
    *
    */
   pullToRefreshEnabled?: boolean;
-
-  /**
-   * Boolean value that determines whether a pull to refresh gesture is
-   * available in the `WebView`. The default value is `false`.
-   * If `true`, sets `bounces` automatically to `true`
-   * @platform ios
-   *
-   */
-  refreshControlLightMode?: boolean;
 
   /**
    * Function that is invoked when the client needs to download a file.
